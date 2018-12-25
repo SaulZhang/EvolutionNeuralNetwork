@@ -26,10 +26,6 @@ def add_connection(connections, genotype):
 
     nodes = sorted(list(froms.union(tos)))#取并集，然后从小到大进行排列
 
-    # print("froms",froms)
-    # print("tos",tos)
-    # print("nodes",nodes)
-
     # select random two:
     r1 = np.random.randint(0,len(nodes))
     r2 = np.random.randint(0,len(nodes) - 1)
@@ -45,14 +41,7 @@ def add_connection(connections, genotype):
 
     assert(from_node < to_node)
 
-    # prevent connections from input to input nodes and output to output nodes.
-    # todo change this
-    
     # 确保不存在输入连接输入，输出连接输出的边
-    # if (from_node == INPUT0 and to_node == INPUT1 or from_node == OUTPUT0 and to_node == OUTPUT1 or 
-    #         from_node == INPUT1 and to_node == INPUT2 or from_node == INPUT2 and to_node == INPUT3 or
-    #         from_node == OUTPUT1 and to_node == OUTPUT2):
-    #     return add_connection(connections, genotype)
     #     
     if ((from_node in INPUT_LIST and to_node in INPUT_LIST) or (from_node in OUTPUT_LIST and to_node in OUTPUT_LIST)):
         return add_connection(connections, genotype)#递归重新创建
@@ -210,11 +199,6 @@ def start_neuroevolution(x, y, x_test, y_test):
     """starts neuron evolution on binary dataset"""
 
     #初始化连接的集合，由于初始只有输入和输出层（每层两个结点），因此存在4条连接
-    # connections = [(0, INPUT0, OUTPUT0), (1, INPUT0, OUTPUT1), (2, INPUT0, OUTPUT2), 
-    #                (3, INPUT1, OUTPUT0), (4, INPUT1, OUTPUT1), (5, INPUT1, OUTPUT2),
-    #                (6, INPUT2, OUTPUT0), (7, INPUT2, OUTPUT1), (8, INPUT2, OUTPUT2),
-    #                (9, INPUT3, OUTPUT0), (10, INPUT3, OUTPUT1), (11, INPUT3, OUTPUT2)]
-
     connections = []
     cnt = 0
     for INPUT in INPUT_LIST:
@@ -227,9 +211,7 @@ def start_neuroevolution(x, y, x_test, y_test):
         genodict[i] = True
 
 
-    #初始化种群的基因组，一开始有5个基因型
-    # genotypes = [{0: True, 1: True, 2: True, 3: True, 4:True,5: True, 6: True, 7: True, 8: True, 9:True,10: True, 11: True} for no in range(INITIAL_POPULATION_SIZE)]
-    
+    #初始化种群的基因组，一开始有5个基因型    
     genotypes = [genodict for no in range(INITIAL_POPULATION_SIZE)]
     
     #一共进行Iteration代的迭代
